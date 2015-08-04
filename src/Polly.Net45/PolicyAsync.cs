@@ -16,6 +16,15 @@ namespace Polly
             _asyncExceptionPolicy = asyncExceptionPolicy;
         }
 
+        internal Policy(Func<Func<Task>, Task> asyncExceptionPolicy, Action<Action> exceptionPolicy)
+        {
+            if (exceptionPolicy == null) throw new ArgumentNullException("exceptionPolicy");
+            if (asyncExceptionPolicy == null) throw new ArgumentNullException("asyncExceptionPolicy");
+
+            _exceptionPolicy = exceptionPolicy;
+            _asyncExceptionPolicy = asyncExceptionPolicy;
+        }
+
         /// <summary>
         ///     Executes the specified asynchronous action within the policy.
         /// </summary>

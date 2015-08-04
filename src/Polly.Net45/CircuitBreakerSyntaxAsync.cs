@@ -33,5 +33,21 @@ namespace Polly
             var policyState = new CircuitBreakerState(exceptionsAllowedBeforeBreaking, durationOfBreak);
             return new Policy(action => CircuitBreakerPolicy.ImplementationAsync(action, policyBuilder.ExceptionPredicates, policyState));
         }
+
+        /// <summary>
+        /// Mixed version of CircuitBreaker that support sync and async operations with same policy and state
+        /// </summary>
+        /// <param name="policyBuilder"></param>
+        /// <param name="exceptionsAllowedBeforeBreaking"></param>
+        /// <param name="durationOfBreak"></param>
+        /// <returns></returns>
+        public static Policy CircuitBreakerMixed(this PolicyBuilder policyBuilder, int exceptionsAllowedBeforeBreaking, TimeSpan durationOfBreak)
+        {
+            if (exceptionsAllowedBeforeBreaking <= 0) throw new ArgumentOutOfRangeException("exceptionsAllowedBeforeBreaking", "Value must be greater than zero.");
+            
+            var policyState = new CircuitBreakerState(exceptionsAllowedBeforeBreaking, durationOfBreak);
+            return new Policy(action => CircuitBreakerPolicy.ImplementationAsync(action, policyBuilder.ExceptionPredicates, policyState),
+                action => CircuitBreakerPolicy.Implementation(action, policyBuilder.ExceptionPredicates, policyState));
+        }
     }
 }
