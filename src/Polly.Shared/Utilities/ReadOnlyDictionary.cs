@@ -40,7 +40,9 @@ namespace Polly.Utilities
     [Serializable]
 #endif
     [DebuggerDisplay("Count = {Count}")]
+#if !SILVERLIGHT
     [ComVisible(false)]
+#endif
     [DebuggerTypeProxy(typeof(ReadOnlyDictionaryDebugView<,>))]
     public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ICollection
     {
