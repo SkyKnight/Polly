@@ -12,6 +12,7 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
+.vs/
 
 # Build results
 [Dd]ebug/
@@ -58,6 +59,9 @@ _ReSharper*
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
+
+# GhostDoc
+*.GhostDoc.xml
 
 # Installshield output folder 
 [Ee]xpress
@@ -107,4 +111,10 @@ _UpgradeReport_Files/
 Backup*/
 UpgradeLog*.XML
 
-build_artifacts
+artifacts
+build
+tools
+
+*.lock.json
+*.nuget.targets
+*.nuget.props
