@@ -192,6 +192,13 @@ namespace Polly
                       breakerController, 
                       cancellationToken, 
                       continueOnCapturedContext),
+                (action, context, cancellationToken) => CircuitBreakerEngine.Implementation(
+                    (ct) => { action(ct); return EmptyStruct.Instance; },
+                    context,
+                    cancellationToken,
+                    policyBuilder.ExceptionPredicates,
+                    PredicateHelper<EmptyStruct>.EmptyResultPredicates,
+                    breakerController),
                 policyBuilder.ExceptionPredicates,
                 breakerController
             );

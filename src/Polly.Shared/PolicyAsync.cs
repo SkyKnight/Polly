@@ -22,6 +22,19 @@ namespace Polly
             _exceptionPredicates = exceptionPredicates ?? PredicateHelper.EmptyExceptionPredicates;
         }
 
+        internal Policy(
+            Func<Func<CancellationToken, Task>, Context, CancellationToken, bool, Task> asyncExceptionPolicy,
+            Action<Action<CancellationToken>, Context, CancellationToken> exceptionPolicy,
+            IEnumerable<ExceptionPredicate> exceptionPredicates)
+        {
+            if (asyncExceptionPolicy == null) throw new ArgumentNullException("asyncExceptionPolicy");
+            if (exceptionPolicy == null) throw new ArgumentNullException(nameof(exceptionPolicy));
+
+            _exceptionPolicy = exceptionPolicy;
+            _asyncExceptionPolicy = asyncExceptionPolicy;
+            _exceptionPredicates = exceptionPredicates ?? PredicateHelper.EmptyExceptionPredicates;
+        }
+
         /// <summary>
         ///     Executes the specified asynchronous action within the policy.
         /// </summary>
